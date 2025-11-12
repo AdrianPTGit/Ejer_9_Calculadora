@@ -2,7 +2,7 @@ name: Java_v_21
 
 on:
   push: 
-  branches: [ main ]
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
@@ -30,7 +30,7 @@ jobs:
         run: |
           cd src
           jar cfe ../Calculadora.jar main *.class
-          
+
       - name: Subir artefacto
         uses: actions/upload-artifact@v4
         with:
