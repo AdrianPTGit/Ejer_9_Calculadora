@@ -1,0 +1,38 @@
+name: Java CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout del código
+        uses: actions/checkout@v4
+
+      - name: ☕ Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: 🧪 Ejecutar tests
+        run: |
+          cd src
+          javac *.java
+          java -ea CalculadoraTest
+
+      - name: 📦 Crear ejecutable
+        run: |
+          cd src
+          jar cfe ../calculadora.jar Main *.class
+
+      - name: 📤 Subir artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: calculadora-ejecutable
+          path: calculadora.jar
