@@ -11,25 +11,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Checkout del código
-        uses: actions/checkout@v4
-
-      - name: ☕ Configurar Java
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      - name: 🧪 Ejecutar tests
+      - name:  Compilar, probar y generar artefacto Java
         run: |
+          echo "===  Checkout del código ==="
+          git clone $GITHUB_SERVER_URL/$GITHUB_REPOSITORY repo
+          cd repo
+
+          echo "===  Configurando Java 17 ==="
+          sudo apt update -y
+          sudo apt install -y openjdk-17-jdk
+
+          echo "===  Compilando y ejecutando tests ==="
           cd src
           javac *.java
           java -ea CalculadoraTest
 
-      - name: 📦 Crear ejecutable
-        run: |
-          cd src
+          echo "===  Creando ejecutable ==="
           jar cfe ../calculadora.jar Main *.class
+
+          echo "===  Proceso completado ==="
+        shell: bash
 
       - name: 📤 Subir artefacto
         uses: actions/upload-artifact@v4
