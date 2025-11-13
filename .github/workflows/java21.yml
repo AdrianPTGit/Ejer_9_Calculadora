@@ -32,7 +32,7 @@ jobs:
         run: java -jar out/Calculadora.jar
 
       - name: Guardar el artefacto generado
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
-          name: calculadora-ejecutable
-          path: Calculadora.jar
+          name: calculadora-jar
+          path: out/Calculadora.jar
